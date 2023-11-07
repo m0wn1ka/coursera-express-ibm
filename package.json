@@ -1,0 +1,15 @@
+{
+  "name": "radha",
+  "version": "1.0.0",
+  "description": "coursera-ibm-final-project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "radha_mounika",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

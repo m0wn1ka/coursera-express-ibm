@@ -22,3 +22,4 @@ a index js
 a user can register,login get their jwt token
 can get requsts based on email isbn etc
 ```
+each logged in user can add their review (review=theirmail+review)

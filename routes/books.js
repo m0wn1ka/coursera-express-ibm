@@ -9,6 +9,7 @@ const router = express.Router();
             "title":"Eloquent_JavaScript,_Third_Edition",
             
             "author":"Marijn Haverbeke",
+            "review":[]
            
         },
         {
@@ -16,18 +17,22 @@ const router = express.Router();
             "title":"Practical Modern JavaScript",
             
             "author":"Nicolás Bevacqua",
+            "review":[]
             
         },
         {
             "isbn":"9781593277574",
             "title":"Understanding ECMAScript 6",
            
-            "author":"Nicholas",        },
+            "author":"Nicholas",    
+            "review":[]   
+         },
         {
             "isbn":"9781449365035",
             "title":"Speaking JavaScript",
 
             "author":"Axel Rauschmayer",
+            "review":[]
             
         },
         {
@@ -35,6 +40,7 @@ const router = express.Router();
             "title":"Learning JavaScript Design Patterns",
            
             "author":"Addy Osmani",
+            "review":[]
           },        
     ]
     console.log("books printing frm books module",books.books);

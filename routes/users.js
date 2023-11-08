@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-let books=require('./books');
+let {x,books}=require('./books');
 
 const router = express.Router();
 let users=[
@@ -10,10 +10,11 @@ let users=[
     }
 ];
 router.get("/",(req,res)=>{
-    console.log("books array printing on get request ot users ",books.books)
+    console.log("books array printing on get request ot users ",books)
     res.send("users get route");
 })
 router.post("/register",(req,res)=>{
+    console.log("boosk in register just to test",books)
     console.log("a post requsest to register");
     let email=req.query.email;
     let password=req.query.password;
@@ -78,6 +79,7 @@ const auth_middle_ware=(req,res,next)=>{
         (err,user)=>{
             if(!err){
                 req.user=user;
+                // console.log("rewq.user  is ",req.user);
                 next();
             }
             else{
@@ -88,16 +90,37 @@ const auth_middle_ware=(req,res,next)=>{
     )
    
 }
+
 router.use('/review',auth_middle_ware);
 router.post('/review/',(req,res)=>{
-    // console.log("req in post of review",req);
+    console.log("req in post of review",req.user.data.email);
+    console.log("req.revew in review fun",req.query.review);
     // console.log("access token is in post request of review",req.access_token);
-
-    let book_isbn=req.isbn;
-    let review=req.review;
-    console.log("post request to review isbn");
+    // console.log("req.user.data.email in review",req.user.data.email)
+    let email_of_review=req.user.data.email;
+    let book_isbn=req.query.isbn;
+   let review="*".concat(req.query.review);
+    review=email_of_review.concat(review);
+    console.log("req.review is ",review)
+    let modified_book = books.filter(book => book.isbn === book_isbn);
+    console.log(modified_book,"is modified book before")
+    modified_book[0]=modified_book[0].review.push(review);
+    console.log(modified_book,"is modified book after")
+    // console.log("post request to review email_of_review ",email_of_review,"book_isbn",book_isbn,"reviw",review);
+    let index = books.findIndex(book => book.isbn === modified_book[0].isbn);
+    console.log("index is ",index)
+    if(index!=-1){
+        books[index] = modified_book[0];
+    }
+    else{
+        console.log(`Book with ISBN ${modified_book.isbn} not found`);
+    }
+    
+   
+     console.log("books after modificataion ",books)
     res.status(200).send("review adtion function");
     return;
-})
+});
+
 
 module.exports=router;

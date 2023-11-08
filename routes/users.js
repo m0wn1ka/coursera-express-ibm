@@ -121,6 +121,55 @@ router.post('/review/',(req,res)=>{
     res.status(200).send("review adtion function");
     return;
 });
+router.use('/edit_review',auth_middle_ware);
+router.post('/edit_review',(req,res)=>{
+    let email_of_review=req.user.data.email;
+    console.log("emaila of review",email_of_review);
+    let book_isbn=req.query.isbn;
+    let new_review=req.query.new_review;
+    let modified_book = books.filter(book => book.isbn === book_isbn);
+    console.log("now loggin each reveiw of given book");
+    let length_user_mail=email_of_review.length
+    old_review=[]
+    // const old_review=modified_book[0].review.filter(review1=>{
+    //     console.log(review1)
+    //     review1.startsWith(email_of_review)
+    // });
+    ///start of loop
+    console.log("modifebook[0.rview",modified_book[0].review)
+    x=modified_book[0].review;
+    let prefix=email_of_review;
+    for (let i = 0; i < x.length; i++) {
+        if (x[i].startsWith(prefix)) {
+          console.log(`${x[i]} starts with ${prefix}`);
+          old_review.push(x[i]);
+        } else {
+          console.log(`${x[i]} does not start with ${prefix}`);
+        }
+      }
+    
+    //end of loop
+    console.log("modifed book[0]",modified_book[0],"old_review is ",old_review)
+    if(old_review==[]){
+        return res.send("no reviw made by u to edit");
+    }
+    let index = modified_book[0].review.indexOf(old_review[0]);
+    
+    modified_book[0].review[index]=new_review;
+    let index_of_book = books.findIndex(book => book.isbn === modified_book[0].isbn);
+    console.log("index is ",index,"modified_book[0].review",books[index_of_book],"indexof book",index_of_book)
+    if(index_of_book!=-1){
+        books[index_of_book] = modified_book[0];
+    }
+    else{
+        console.log(`Book with ISBN ${modified_book.isbn} not found`);
+    }
+    console.log("books after modificataionnn ",books)
+    res.status(200).send("review edit function");
+    return;
+
+
+})
 
 
 module.exports=router;

@@ -23,3 +23,7 @@ a user can register,login get their jwt token
 can get requsts based on email isbn etc
 ```
 each logged in user can add their review (review=theirmail+review)
+### status
+now those users who inserted a reviw for a specific book,they only can edit it 
+```
+to prvent overloading only editing opeiton is enable for once```
